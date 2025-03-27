@@ -1,7 +1,7 @@
 import gradio as gr
 import requests
 
-API_URL = "http://localhost:5000/generate_script"
+API_URL = "http://127.0.0.1:5000/generate_script"
 
 def get_script(description, theme):
     response = requests.post(API_URL, json={"description": description, "theme": theme})
@@ -16,6 +16,8 @@ with gr.Blocks() as demo:
     theme = gr.Radio(label="Select Theme", choices=["Challenge video", "True crime video", "Drama yap session video"])
     
     generate_button = gr.Button("Generate Script")
-    generate_button.click(fn=get_script, inputs=[description, theme], outputs=None)
+    output_textbox = gr.Textbox(label="Generated Script")
+
+    generate_button.click(fn=get_script, inputs=[description, theme], outputs=[output_textbox])
 
 demo.launch()

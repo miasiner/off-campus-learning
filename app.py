@@ -1,5 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # pip3 install flask-cors
 import openai
 import os
 from dotenv import load_dotenv
@@ -7,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask(__name__)
+CORS(app)
 
 def generate_script(description, theme):
     prompt = f"Generate a script for a {theme} video based on the following description: {description}"
