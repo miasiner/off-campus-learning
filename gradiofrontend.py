@@ -34,7 +34,6 @@ def generate_audio(monologue):
     # Use Speechify to convert text to speech
     audio_stream = speechify_client.tts.audio.stream(
         accept="audio/mpeg",  # Desired audio format
-        # input="Hi there buddy! I like you a lot. Let's go on a date!",  # The monologue text
         input=monologue,
         voice_id="005ccf96-959d-4eeb-920f-f13e2bb84f21"  # You can specify any voice you want here
     )
@@ -57,7 +56,6 @@ def generate_script_and_audio(theme, description):
     monologue = generate_script(theme, description)
 
     # Step 2: Generate the audio from the monologue
-    # audio_file_path = generate_audio("Hi there buddy! I like you a lot. Let's go on a date!")
     audio_file_path = generate_audio(monologue)
 
     return monologue, audio_file_path
