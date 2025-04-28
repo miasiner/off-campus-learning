@@ -3,9 +3,12 @@ from dotenv import load_dotenv
 import gradio as gr
 from openai import OpenAI
 from speechify import Speechify
+from moviepy import ImageClip, TextClip, CompositeVideoClip, AudioFileClip,concatenate_videoclips
+
 from PIL import Image
 import io
 import requests
+# python3 gradiofrontend.py
 
 # Load environment variables
 load_dotenv()
@@ -66,13 +69,29 @@ def generate_thumbnail(monologue, theme):
     
     return thumbnail_path
 
+
+# voices
+SOPH = '005ccf96-959d-4eeb-920f-f13e2bb84f21'
+MR_BEAST = '55f54ce0-d0f7-48ae-b569-ae625f612850'
+CALL_HER_DADDY = '0134fdf0-b4a3-40f7-b225-a0db5498e1a0'
+TRUE_CRIME = "22b9c21f-b94e-4df2-a958-09e72cc90e8c"
+
 # Function to convert the monologue to audio and save it locally
-def generate_audio(monologue):
+def generate_audio(monologue, theme):
+    voice_map = {
+        "Mr Beast Video": MR_BEAST,
+        "True crime video": TRUE_CRIME,
+        "Call Her Daddy Video": CALL_HER_DADDY
+    }
+    
+    # Default to SOPH if the theme isn't found
+    voice_id = voice_map.get(theme, SOPH)
+
     # Use Speechify to convert text to speech
     audio_stream = speechify_client.tts.audio.stream(
         accept="audio/mpeg",  # Desired audio format
         input=monologue,
-        voice_id="0134fdf0-b4a3-40f7-b225-a0db5498e1a0"  # You can specify any voice you want here
+        voice_id=voice_id  # You can specify any voice you want here
     )
     
     # Save the audio file locally by consuming the audio stream
@@ -93,7 +112,7 @@ def generate_script_and_audio(theme, description):
     monologue = generate_script(theme, description)
 
     # Step 2: Generate the audio from the monologue
-    audio_file_path = generate_audio(monologue)
+    audio_file_path = generate_audio(monologue, theme)
     
     # Step 3: Generate the thumbnail
     thumbnail_path = generate_thumbnail(monologue, theme)
