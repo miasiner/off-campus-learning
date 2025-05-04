@@ -33,10 +33,10 @@ def generate_script(theme, description):
     return monologue
 
 # Function to generate a thumbnail using DALL-E
-def generate_thumbnail(monologue, theme):
+def generate_thumbnail(theme, description):
     # Create theme-specific prompts
     theme_prompts = {
-        "Mr Beast Video": "Create a high-energy YouTube thumbnail in MrBeast style. Include bold text, bright colors, and dramatic imagery. The thumbnail should look expensive and viral-worthy, similar to MrBeast's thumbnails with dramatic facial expressions and eye-catching elements.",
+        "Mr Beast Challenge Video": "Create a high-energy YouTube thumbnail in MrBeast style. Include bold text, bright colors, and dramatic imagery. The thumbnail should look expensive and viral-worthy, similar to MrBeast's thumbnails with dramatic facial expressions and eye-catching elements.",
         "True crime video": "Create a mysterious and dramatic true crime YouTube thumbnail. Use dark, moody colors with dramatic lighting. Include elements like crime scene tape, dramatic shadows, or mysterious imagery. The style should be similar to popular true crime channels.",
         "Call Her Daddy Video": "Create a bold, edgy YouTube thumbnail in the style of Call Her Daddy. Use vibrant colors, bold text, and confident imagery. The thumbnail should be attention-grabbing and slightly provocative, similar to the podcast's branding."
     }
@@ -45,7 +45,7 @@ def generate_thumbnail(monologue, theme):
     theme_prompt = theme_prompts.get(theme, "Create a YouTube thumbnail that is eye-catching and professional.")
     
     # Create the final prompt
-    thumbnail_prompt = f"{theme_prompt} Content context: {monologue[:100]}... The thumbnail should be optimized for YouTube with bold text, vibrant colors, and professional design elements that will make viewers want to click."
+    thumbnail_prompt = f"{theme_prompt} Content context: {description}. The thumbnail should be optimized for YouTube with bold text, vibrant colors, and professional design elements that will make viewers want to click."
     
     # Generate image using DALL-E
     response = client.images.generate(
@@ -79,7 +79,7 @@ TRUE_CRIME = "22b9c21f-b94e-4df2-a958-09e72cc90e8c"
 # Function to convert the monologue to audio and save it locally
 def generate_audio(monologue, theme):
     voice_map = {
-        "Mr Beast Video": MR_BEAST,
+        "Mr Beast Challenge Video": MR_BEAST,
         "True crime video": TRUE_CRIME,
         "Call Her Daddy Video": CALL_HER_DADDY
     }
@@ -105,7 +105,7 @@ def generate_audio(monologue, theme):
     return audio_file_path
 
 # Gradio interface
-theme_options = ["Mr Beast Video", "True crime video", "Call Her Daddy Video"]
+theme_options = ["Mr Beast Challenge Video", "True crime video", "Call Her Daddy Video"]
 
 def generate_script_and_audio(theme, description):
     # Step 1: Generate the script (monologue)
@@ -115,7 +115,7 @@ def generate_script_and_audio(theme, description):
     audio_file_path = generate_audio(monologue, theme)
     
     # Step 3: Generate the thumbnail
-    thumbnail_path = generate_thumbnail(monologue, theme)
+    thumbnail_path = generate_thumbnail(theme, description)
 
     return monologue, audio_file_path, thumbnail_path
 
