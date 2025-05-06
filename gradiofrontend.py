@@ -130,8 +130,8 @@ demo = gr.Interface(
         gr.Audio(label="Generated Speech", type="filepath"),
         gr.Image(label="Generated Thumbnail", type="filepath")
     ],
-    title="AI Monologue Generator",
-    description="Generate a monologue, convert it to speech, and create a thumbnail using AI."
+    title="Off Campus Learning: Content Generator",
+    description="Select a voice/theme and enter the topic of choice. Collect the audio and thumbnail output to be uploaded to YouTube."
 )
 
 demo.launch()
