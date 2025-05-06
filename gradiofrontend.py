@@ -8,7 +8,6 @@ from moviepy import ImageClip, TextClip, CompositeVideoClip, AudioFileClip,conca
 from PIL import Image
 import io
 import requests
-# python3 gradiofrontend.py
 
 # Load environment variables
 load_dotenv()
